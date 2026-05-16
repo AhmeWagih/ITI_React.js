@@ -3,15 +3,17 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "src/components/ui/card";
+import { Link } from "react-router";
 import type { ProductCardProps } from "src/types";
-
+import { Button } from "../ui/button";
 
 export function ProductCard({ product }: ProductCardProps) {
   return (
-    <Card className="h-full">
+    <Card className="h-full transition-shadow hover:shadow-md">
       <div className="relative aspect-square overflow-hidden bg-muted/30">
         <img
           src={product.image}
@@ -30,9 +32,11 @@ export function ProductCard({ product }: ProductCardProps) {
       </div>
 
       <CardHeader>
-        <CardTitle className="line-clamp-2 text-sm leading-snug">
-          {product.title}
-        </CardTitle>
+        <Link to={`/product/${product.id}`}>
+          <CardTitle className="line-clamp-2 text-sm leading-snug">
+            {product.title}
+          </CardTitle>
+        </Link>
         <CardDescription className="capitalize">
           {product.category}
         </CardDescription>
@@ -43,6 +47,11 @@ export function ProductCard({ product }: ProductCardProps) {
           ${product.price.toFixed(2)}
         </p>
       </CardContent>
+      <CardFooter>
+        <Link to={`/product/${product.id}`}>
+        <Button className="w-full cursor-pointer" variant='default' size='lg'>View Product</Button>
+        </Link>
+      </CardFooter>
     </Card>
   );
 }

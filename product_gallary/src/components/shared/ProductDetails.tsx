@@ -1,3 +1,4 @@
+import { useDispatch } from "react-redux";
 import { Link, useParams } from "react-router";
 import { Badge } from "src/components/ui/badge";
 import { Button } from "src/components/ui/button";
@@ -10,10 +11,12 @@ import {
 } from "src/components/ui/card";
 import { Spinner } from "src/components/ui/spinner";
 import { useProductDetails } from "src/hooks/useProductDetails";
+import { addToCart } from "src/store/cartSlice";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const { product, loading, error } = useProductDetails(id);
+  const dispatch = useDispatch();
 
   if (loading) {
     return (
@@ -68,7 +71,14 @@ const ProductDetails = () => {
               </p>
             </CardContent>
             <CardFooter className="px-0 py-8">
-              <Button variant="default" size='lg' className="bg-blue-800">Add to Cart</Button>
+              <Button
+                variant="default"
+                size="lg"
+                className="bg-blue-800"
+                onClick={() => dispatch(addToCart(product))}
+              >
+                Add to Cart
+              </Button>
             </CardFooter>
           </div>
         </div>

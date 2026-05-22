@@ -1,6 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "src/store/store";
-import { removeFromCart } from "src/store/cartSlice";
+import {
+  removeFromCart,
+  incrementQuantity,
+  decrementQuantity,
+} from "src/store/cartSlice";
 import {
   Card,
   CardContent,
@@ -29,7 +33,9 @@ const Cart = () => {
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      <h1 className="mb-6 text-2xl font-semibold">Cart ({cartItems.length})</h1>
+      <h1 className="mb-6 text-2xl font-semibold">
+        Cart ({cartItems.length})
+      </h1>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {cartItems.map((item) => (
           <Card key={item.id}>
@@ -47,10 +53,32 @@ const Cart = () => {
             </CardHeader>
             <CardContent>
               <p className="text-lg font-semibold">
-                ${item.price.toFixed(2)}
+                ${(item.price * item.quantity).toFixed(2)}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                ${item.price.toFixed(2)} each
               </p>
             </CardContent>
-            <CardFooter>
+            <CardFooter className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => dispatch(decrementQuantity(item.id))}
+                >
+                  -
+                </Button>
+                <span className="w-8 text-center text-sm font-medium">
+                  {item.quantity}
+                </span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => dispatch(incrementQuantity(item.id))}
+                >
+                  +
+                </Button>
+              </div>
               <Button
                 variant="destructive"
                 size="sm"

@@ -33,6 +33,9 @@ const Navbar = () => {
           <NavLink to="/cart" className={navLinkClass}>
             Cart ({cartCount})
           </NavLink>
+          <NavLink to="/register" className={navLinkClass}>
+            Register
+          </NavLink>
           <Button variant="outline" size="lg" onClick={toggleTheme}>
             {theme === "light" ? "🌙" : "☀️"}
           </Button>

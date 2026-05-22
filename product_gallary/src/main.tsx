@@ -6,6 +6,7 @@ import Cart from "./components/shared/Cart";
 import NotFound from "./components/shared/NotFound";
 import ProductDetails from "./components/shared/ProductDetails";
 import ProductsList from "./components/shared/ProductsList";
+import Register from "./components/shared/Register";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 import { LanguageProvider } from "./context/LanguageContext";
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "cart",
         element: <Cart />,
+      },
+      {
+        path: "register",
+        element: <Register />,
       },
       {
         path: "*",

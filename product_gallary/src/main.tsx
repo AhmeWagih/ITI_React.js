@@ -6,6 +6,11 @@ import Cart from "./components/shared/Cart";
 import NotFound from "./components/shared/NotFound";
 import ProductDetails from "./components/shared/ProductDetails";
 import ProductsList from "./components/shared/ProductsList";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
+import { LanguageProvider } from "./context/LanguageContext";
+import { useEffect } from "react";
+import { useThemeStore } from "./store/useThemeStore";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +37,20 @@ const router = createBrowserRouter([
   },
 ]);
 
+export const App = () => {
+  const theme = useThemeStore((state) => state.theme);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", theme === "dark");
+  }, [theme]);
+
+  return <RouterProvider router={router} />;
+};
+
 createRoot(document.getElementById("root")!).render(
-  <RouterProvider router={router} />,
+  <Provider store={store}>
+    <LanguageProvider>
+      <App />
+    </LanguageProvider>
+  </Provider>
 );

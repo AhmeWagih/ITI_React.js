@@ -10,8 +10,12 @@ import {
 import { Link } from "react-router";
 import type { ProductCardProps } from "src/types";
 import { Button } from "../ui/button";
+import { useDispatch } from "react-redux";
+import { addToCart } from "src/store/cartSlice";
 
 export function ProductCard({ product }: ProductCardProps) {
+  const dispatch = useDispatch();
+
   return (
     <Card className="h-full transition-shadow hover:shadow-md">
       <div className="relative aspect-square overflow-hidden bg-muted/30">
@@ -47,9 +51,19 @@ export function ProductCard({ product }: ProductCardProps) {
           ${product.price.toFixed(2)}
         </p>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="flex gap-2">
+        <Button
+          className="flex-1 cursor-pointer"
+          variant="default"
+          size="lg"
+          onClick={() => dispatch(addToCart(product))}
+        >
+          Add to Cart
+        </Button>
         <Link to={`/product/${product.id}`}>
-        <Button className="w-full cursor-pointer" variant='default' size='lg'>View Product</Button>
+          <Button className="cursor-pointer" variant="outline" size="lg">
+            View
+          </Button>
         </Link>
       </CardFooter>
     </Card>

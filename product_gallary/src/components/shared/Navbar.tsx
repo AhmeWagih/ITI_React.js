@@ -1,6 +1,17 @@
 import { Link, NavLink } from "react-router";
+import { useThemeStore } from "src/store/useThemeStore";
+import { useSelector } from "react-redux";
+import type { RootState } from "src/store/store";
+import { useLanguage } from "src/context/LanguageContext";
+import { Button } from "src/components/ui/button";
 
 const Navbar = () => {
+  const { theme, toggleTheme } = useThemeStore();
+  const cartCount = useSelector(
+    (state: RootState) => state.cart.cartItems.length
+  );
+  const { language, toggleLanguage } = useLanguage();
+
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     [
       "rounded-md px-3 py-2 text-sm font-medium transition-colors",
@@ -20,8 +31,17 @@ const Navbar = () => {
             Home
           </NavLink>
           <NavLink to="/cart" className={navLinkClass}>
-            Cart
+            Cart ({cartCount})
           </NavLink>
+          <Button variant="outline" size="lg" onClick={toggleTheme}>
+            {theme === "light" ? "🌙" : "☀️"}
+          </Button>
+          <Button variant="outline" size="lg" onClick={toggleLanguage}>
+            {language === "en" ? "عربي" : "English"}
+          </Button>
+          <span className="text-sm text-muted-foreground">
+            {language === "en" ? "Welcome" : "مرحبا"}
+          </span>
         </div>
       </div>
     </nav>
